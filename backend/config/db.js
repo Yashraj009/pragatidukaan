@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// Mongoose, an ODM (Object Data Modeling) library for MongoDB and Node.js
 
 const connectDB = async ()=>{
     try {
