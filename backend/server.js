@@ -1,4 +1,5 @@
 import express from "express";
+import connectDB from "./config/db.js";
 // we can use this as es6 module is type. it has been modified in package.json
 //default importing is like 
 // const express = require('express')
@@ -6,6 +7,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 import products from "./data/products.js";
 const port = process.env.PORT || 5000;
+
+connectDB(); // Connect to mongodb
+
 const app = express();
 
 app.get('/', (req, res)=>{
