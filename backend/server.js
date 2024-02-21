@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js"
+import { notFound, errorHandler } from "./middleware/errorHandler.js";
 // we can use this as es6 module is type. it has been modified in package.json
 //default importing is like 
 // const express = require('express')
@@ -17,5 +18,10 @@ app.get('/', (req, res)=>{
 })
 
 app.use('/api/products', productRoutes);
+
+app.use(notFound);
+
+app.use(errorHandler);
+
 
 app.listen(port,()=>{`API is running at port ${port}`})
