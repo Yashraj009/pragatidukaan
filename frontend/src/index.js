@@ -6,6 +6,8 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import {Provider} from 'react-redux';
+import store from "./store";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 //bootstrap.min.css: This is the actual CSS file you're importing. It's a minimized version (minified) of the Bootstrap CSS, meaning it has been compressed to reduce its file size for faster loading on web pages.
 import "./assets/styles/bootstrap.custom.css";
@@ -28,7 +30,9 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
