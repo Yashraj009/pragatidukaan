@@ -9,11 +9,9 @@ const HomeScreen = () => {
   // const [products, setProducts] = useState([]);
   // // using the useState hook to initialize a state variable named products with an empty array as its initial value. The setProducts function is a setter function provided by the useState hook, which is used to update the value of the products state variable.
 
-
   // useEffect(() => {
   //   // useEffect hook is used to perform side effects in functional components, such as data fetching, subscriptions, or DOM manipulation. In this case, you're using it to fetch products data from the server when the component mounts.
   //   const fetchProducts = async () => {
-
 
   //     const { data } = await axios.get("/api/products");
   //     // The response object typically contains various properties such as data, status, statusText, headers, etc. The data property specifically holds the response data returned by the server.
@@ -30,21 +28,25 @@ const HomeScreen = () => {
   //   fetchProducts();
   // }, []);
 
-  const {data: products, isLoading, iserror}= useGetProductsQuery();
+  const { data: products, isLoading, isError } = useGetProductsQuery();
   return (
     <>
-      {isLoading ? (<h1>Loading...</h1>): iserror ? (iserror?.data?.message || iserror.message):(
-      <>
-        <h1>Latest Products</h1>
-        <Row>
-          {products?.map((product) => (
-            <Col key={product._id} sm="12" md="6" lg="4" xl="3">
-              <Products product={product} />
-              {/* <h3>{product.name}</h3> */}
-            </Col>
-          ))}
-        </Row>
-      </>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : isError ? (
+        <div>{isError?.data?.message || isError.message}</div>
+      ) : (
+        <>
+          <h1>Latest Products</h1>
+          <Row>
+            {products?.map((product) => (
+              <Col key={product._id} sm="12" md="6" lg="4" xl="3">
+                <Products product={product} />
+                {/* <h3>{product.name}</h3> */}
+              </Col>
+            ))}
+          </Row>
+        </>
       )}
     </>
   );
