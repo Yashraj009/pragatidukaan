@@ -12,7 +12,7 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
-import { useGetProductDetailsQuery } from "../slices/productDetailsApiSlice";
+import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 // import axios from "axios";
 
 const ProductScreen = () => {
