@@ -11,6 +11,8 @@ import {
   Button,
   ListGroupItem,
 } from "react-bootstrap";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import Rating from "../components/Rating";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 // import axios from "axios";
@@ -42,9 +44,11 @@ const ProductScreen = () => {
       {/* In React applications, the Link component from React Router is typically used for navigation between different routes instead of using regular HTML <a> tags. 
         When you use a regular <a> tag, clicking on it would typically trigger a full page reload, which is not desirable in a single-page application (SPA) built with React. The Link component, on the other hand, leverages the browser's history API to handle navigation without causing a full page refresh. */}
       {isLoading ? (
-        <h1>Loading...</h1>
+        <Loader />
       ) : isError ? (
-        <div>{isError?.data?.message || isError.message}</div>
+        <Message variant="danger">
+          {isError?.data?.message || isError.message}
+        </Message>
       ) : (
         <>
           <Row>

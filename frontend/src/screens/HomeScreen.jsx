@@ -2,6 +2,8 @@ import React from "react";
 // import { useState, useEffect } from "react";
 // import axios from "axios";
 import { Row, Col } from "react-bootstrap";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import Products from "../components/Products";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 
@@ -32,9 +34,9 @@ const HomeScreen = () => {
   return (
     <>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <Loader/>
       ) : isError ? (
-        <div>{isError?.data?.message || isError.message}</div>
+        <Message variant='danger'>{isError?.data?.message || isError.message}</Message>
       ) : (
         <>
           <h1>Latest Products</h1>
