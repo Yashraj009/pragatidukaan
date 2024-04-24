@@ -1,10 +1,14 @@
 import React from "react";
-import { Navbar, Nav, Container, NavLink } from "react-bootstrap";
+import { Badge,Navbar, Nav, Container, NavLink } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import logo from "../assets/logo.png";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { cartItems}=useSelector((state)=>state.cart)
+
+  console.log(cartItems)
   return (
     //altogether, this line of code creates a navbar with a dark background and light text, which expands to a full-width layout on large screens and automatically collapses the mobile menu when a menu item is selected.
     <header>
@@ -22,6 +26,14 @@ const Header = () => {
               <LinkContainer to="/cart">
                 <NavLink>
                   <FaShoppingCart /> Cart
+                  {
+                    cartItems.length>0 && (
+                      <Badge pill style={{marginLeft:'5px'}}>
+                        {cartItems.reduce((a,c)=>a+c.qty,0)}
+
+                      </Badge>
+                    )
+                  }
                 </NavLink>
               </LinkContainer>
               <LinkContainer to="/login">
