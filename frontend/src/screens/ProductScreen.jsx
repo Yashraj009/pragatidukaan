@@ -1,7 +1,8 @@
 import React from "react";
-// import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   Row,
   Col,
@@ -10,32 +11,55 @@ import {
   Card,
   Button,
   ListGroupItem,
+  Form,
 } from "react-bootstrap";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Rating from "../components/Rating";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
+import { addToCart } from "../slices/cartSlice.js";
 // import axios from "axios";
 
 const ProductScreen = () => {
+  // console.log(addToCart);
   // const [product, setProduct] = useState([]);
-
+  
   const { id: productId } = useParams(); //useParams() is a custom hook provided by React Router that allows functional components to access the parameters from the URL.
   // // { id: productId }, you're extracting the value of the id parameter from the URL and storing it in a variable named productId.
   // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     const { data } = await axios.get(`/api/products/${productId}`);
-  //     setProduct(data);
-  //   };
-
-  //   fetchProduct();
-  // }, [productId]);
-  const {
-    data: product,
-    isLoading,
-    isError,
-  } = useGetProductDetailsQuery(productId);
-
+    //   const fetchProduct = async () => {
+      //     const { data } = await axios.get(`/api/products/${productId}`);
+      //     setProduct(data);
+      //   };
+      
+      //   fetchProduct();
+      // }, [productId]);
+      
+      const [qty, setQty] = useState(1);
+      
+      const dispatch = useDispatch();
+      const navigate = useNavigate();
+      
+      const {
+        data: product,
+        isLoading,
+        isError,
+      } = useGetProductDetailsQuery(productId);
+      // console.log(product);
+      const addToCartHandler = () => {
+        // dispatch(addToCart({ ...product, qty }));
+        // Assuming you're using Redux Toolkit's createSlice, addToCart should be an action creator
+        //-----------------------------
+        const addToCartAction = addToCart({ ...product, qty });
+        dispatch(addToCartAction);
+        //-----------------------------
+        // const addToCartAction = {
+        //   type: "cart/addToCart",
+        //   payload: { ...product, qty },
+        // };
+        // dispatch(addToCartAction);
+        navigate("/cart");
+};
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
@@ -47,7 +71,7 @@ const ProductScreen = () => {
         <Loader />
       ) : isError ? (
         <Message variant="danger">
-          {isError?.data?.message || isError.message}
+          {isError?.data?.message || isError?.message}
         </Message>
       ) : (
         <>
@@ -100,13 +124,39 @@ const ProductScreen = () => {
                       </Col>
                     </Row>
                   </ListGroupItem>
+                  {product.countInStock > 0 && (
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Qty</Col>
+                        <Col>
+                          <Form.Control
+                            as="select"
+                            value={qty}
+                            onChange={(e) => setQty(Number(e.target.value))}
+                          >
+                            {[
+                              ...Array(product.countInStock)
+                                .keys()
+                                .map((x) => (
+                                  <option key={x + 1} value={x + 1}>
+                                    {x + 1}
+                                  </option>
+                                )),
+                            ]}
+                          </Form.Control>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+
                   <ListGroupItem>
                     <Button
                       className="btn-block"
                       type="button"
                       disabled={product.countInStock === 0}
+                      onClick={addToCartHandler}
                     >
-                      {" "}
+                      {/* {" "} */}
                       Add to Cart
                     </Button>
                   </ListGroupItem>
