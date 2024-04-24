@@ -6,7 +6,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import {Provider} from 'react-redux';
+import { Provider } from "react-redux";
 import store from "./store";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 //bootstrap.min.css: This is the actual CSS file you're importing. It's a minimized version (minified) of the Bootstrap CSS, meaning it has been compressed to reduce its file size for faster loading on web pages.
@@ -16,13 +16,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
-
+import CartScreen from "./screens/CartScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/products/:id" element={<ProductScreen />} />
+      <Route path="/cart" element={<CartScreen />} />
     </Route>
   )
 );
