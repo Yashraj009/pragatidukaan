@@ -3,6 +3,7 @@ import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 // we can use this as es6 module is type. it has been modified in package.json
 //default importing is like
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.use(notFound);
 
