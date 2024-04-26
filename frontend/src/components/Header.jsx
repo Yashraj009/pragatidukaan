@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Badge,
   Navbar,
@@ -9,17 +10,31 @@ import {
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { logout } from "../slices/authSlice";
+import { useLogoutMutation } from "../slices/usersApiSlice";
 import logo from "../assets/logo.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Loader from "../components/Loader";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
 
-  const logoutHandler = () => {
-    console.log("Logout");
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const [logoutApiCall] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      <Loader />;
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // console.log(cartItems)
   return (
     //altogether, this line of code creates a navbar with a dark background and light text, which expands to a full-width layout on large screens and automatically collapses the mobile menu when a menu item is selected.
