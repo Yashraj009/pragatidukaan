@@ -1,11 +1,13 @@
 //it contains all logic of orderRoutes.js
 import asyncHandler from "../middleware/asyncHandler.js";
 import Order from "../models/orderModel.js";
+import Product from "../models/productModel.js";
 
 //@desc create new order
 //@route POST /api/orders
 //@access PRIVATE
 const addOrderItems = asyncHandler(async (req, res) => {
+  // console.log(req);
   const {
     orderItems,
     shippingAddress,
@@ -20,7 +22,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("NO order items");
   } else {
-    const order = new Order({
+    const order = await new Order({
       orderItems: orderItems.map((x) => ({
         ...x,
         product: x._id,
@@ -35,9 +37,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
       totalPrice,
     });
 
-    const createdOrder = await order.save();
+    const created_order = await order.save();
 
-    res.status(201).json(createdOrder);
+    res.status(201).json(created_order);
   }
 });
 
