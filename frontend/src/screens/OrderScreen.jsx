@@ -186,7 +186,7 @@ const OrderScreen = () => {
                 </Row>
                 <Row>
                   <Col>Total price: </Col>
-                  <Col>${order.totalPrice}</Col>
+                  <Col>₹{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -194,12 +194,12 @@ const OrderScreen = () => {
                 <Loader />
               ) : (
                 <div>
-                  {/* <Button
+                  <Button
                     onClick={onApproveTest}
                     style={{ marginBottom: "10px" }}
                   >
                     Test Pay Order
-                  </Button> */}
+                  </Button>
 
                   <div>
                     <PayPalButtons
